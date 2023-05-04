@@ -1,10 +1,10 @@
 package se.kth.iv1350.seminare3.view;
 
-/*Placeholder for real view*/
 
 import se.kth.iv1350.seminare3.controller.Controller;
 
 import java.util.Scanner;
+/*Placeholder for real view*/
 
 public class View {
     private Controller contr;
@@ -12,7 +12,9 @@ public class View {
     public View(Controller contr) {
         this.contr = contr;
     }
-
+    /*
+    Simulates a sale. Lets user enter itemIdentifiers to add items to sale.
+     */
     public void runFakeExecution() {
         contr.startSale();
         System.out.println("A new sale has been started");

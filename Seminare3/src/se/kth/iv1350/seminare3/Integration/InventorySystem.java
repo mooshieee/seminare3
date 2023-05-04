@@ -5,8 +5,7 @@ import se.kth.iv1350.seminare3.model.ItemInformation;
 
 public  class InventorySystem {
     static ItemInformation[] itemList = new ItemInformation[5];
-
-
+    //createItemList adds ItemInformation objects to itemList
     public static ItemInformation[] createItemList() {
 
         itemList[0] = new ItemInformation(25, "Felix köttbullar", 1, 0.2,1);
@@ -15,14 +14,9 @@ public  class InventorySystem {
         itemList[3] = new ItemInformation(35, "Pasta", 4, 0.2,1);
         itemList[4] = new ItemInformation(15, "Mjölk", 5, 0.2,1);
 
-
-
-
         return itemList;
-
     }
-
-
+    //Loops through the itemList and retrieves the item that has the correct itemIdentifier
     public static ItemInformation retrieveItemInformation(int itemIdentifier) {
         ItemInformation []itemList = createItemList();
 

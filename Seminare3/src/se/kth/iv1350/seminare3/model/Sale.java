@@ -19,7 +19,7 @@ public class Sale {
     public double updateSale(ItemInformation itemInfo, Sale sale) {
         //runningTotal = runningTotal + itemInfo.itemPrice*itemInfo.quanitity;
         runningTotal = 0;
-        //Endast om item inte finns i purchaselist lägg till item
+        //Only add item to itemPurchaseList if it doesn't already exist in list.
         boolean foundItem = false;
         for (int i = 0; i < sale.itemPurchaseList.size();i++) {
             if (sale.itemPurchaseList.get(i).itemIdentifier == itemInfo.itemIdentifier) {
@@ -29,12 +29,10 @@ public class Sale {
         if (!foundItem) {
             sale.itemPurchaseList.add(itemInfo);
         }
-        if (sale.itemPurchaseList.size() == 0) {
-            sale.itemPurchaseList.add(itemInfo);
-        }
+
         for (int i = 0;i < sale.itemPurchaseList.size();i++) {
             runningTotal = runningTotal + sale.itemPurchaseList.get(i).itemPrice * sale.itemPurchaseList.get(i).quanitity;
-            System.out.println("Quanitity" +  sale.itemPurchaseList.get(i).quanitity);
+
         }
         sale.runningTotal = runningTotal;
         return runningTotal;

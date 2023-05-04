@@ -1,5 +1,4 @@
 package se.kth.iv1350.seminare3.controller;
-/*This is the applications only controller. All calls to the model pass through this class*/
 
 import se.kth.iv1350.seminare3.Integration.InventorySystem;
 import se.kth.iv1350.seminare3.model.ItemInformation;
@@ -7,6 +6,8 @@ import se.kth.iv1350.seminare3.model.Receipt;
 import se.kth.iv1350.seminare3.model.Sale;
 
 import java.util.Scanner;
+
+/*This is the applications only controller. All calls to the model pass through this class*/
 
 public class Controller {
     private Sale sale;
@@ -16,12 +17,20 @@ public class Controller {
     public void startSale() {
         sale = new Sale();
     }
-
+    /*
+    Prints information about a ItemInformation object.
+    Description, Price and VATRate.
+     */
     public static void printInformation(ItemInformation itemInfo){
         System.out.println("Item description: " + itemInfo.itemDescription);
         System.out.println("Price: " + itemInfo.itemPrice);
         System.out.println("Item VAT rate: " + itemInfo.itemVATRate);
     }
+    /*
+    enterItemIdentifier if itemIdentifier has already been used previously, if so then can just increase the
+    quanitity of that item. If itemIdentifier has not already been used it searches for itemIdentifier in
+    InventorySystem using retrieveItemInformation method. Then uses itemInfo to update sale and calculate runningTotal.
+     */
     public void enterItemIdentifier(int itemIdentifier) {
         ItemInformation itemInfo = null;
         boolean itemAdded = false;
@@ -58,6 +67,9 @@ public class Controller {
             }
         }
     }
+    /*
+    enterAmountPaid calculates change and sets amountPaid and change variables in sale.
+     */
     public double enterAmountPaid(double amountPaid) {
         double change =  amountPaid-sale.runningTotal;
         sale.amountPaid = amountPaid;
@@ -65,10 +77,9 @@ public class Controller {
         return change;
 
     }
+    //Ends sale and prints receipt
     public void endSale() {
         sale.receipt.printReceipt(sale);
     }
-
-
 
 }
