@@ -9,6 +9,7 @@ public class Sale {
     public Receipt receipt;
     public ArrayList<ItemInformation> itemPurchaseList = new ArrayList<ItemInformation>();
     public double runningTotal;
+    public double totalVAT;
     public double amountPaid;
     public double totalPriceWithoutVAT;
     public double change;
