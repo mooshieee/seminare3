@@ -2,8 +2,9 @@ package se.kth.iv1350.seminare3.Integration;
 
 import se.kth.iv1350.seminare3.model.ItemInformation;
 
-
+//InventorySystem contains the itemList
 public  class InventorySystem {
+    //Array of the object ItemInformation is created
     static ItemInformation[] itemList = new ItemInformation[5];
     //createItemList adds ItemInformation objects to itemList
     public static ItemInformation[] createItemList() {

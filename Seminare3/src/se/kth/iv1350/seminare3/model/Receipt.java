@@ -3,13 +3,15 @@ package se.kth.iv1350.seminare3.model;
 import java.time.LocalTime;
 import se.kth.iv1350.seminare3.controller.Controller;
 
-
+//the class Receipt contains saleTime and a method printReceipt
 public class Receipt {
     LocalTime saleTime;
     public Receipt(LocalTime saleTime) {
         this.saleTime = saleTime;
     }
 
+    //printReceipt the saleTime, then lops through the itemPurchaseList and print all the items.
+    //It also prints runningTotal, amountPaid and change
     public void printReceipt(Sale sale) {
         System.out.println("Receipt");
         System.out.println("Time of purchase: " + saleTime );

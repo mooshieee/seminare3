@@ -1,5 +1,5 @@
 package se.kth.iv1350.seminare3.model;
-
+//ItemInformation contains itemPrice, itemDescription, itemIdentifier, itemVATRate and quantity
 public class ItemInformation {
     public double itemPrice;
     public String itemDescription;
