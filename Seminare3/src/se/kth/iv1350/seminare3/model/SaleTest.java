@@ -11,8 +11,8 @@ class SaleTest {
 
     Sale testSale = new Sale();
     double runningTotal;
-    ItemInformation testItem = new ItemInformation(25, "Felix köttbullar", 1, 0.2,1);
-    ItemInformation testItem2 = new ItemInformation(20, "Nocco", 2, 0.2,1);
+    ItemInformation testItem = new ItemInformation(25/1.25, "Felix köttbullar", 1, 0.25,1);
+    ItemInformation testItem2 = new ItemInformation(20/1.12, "Nocco", 2, 0.12,1);
 
     //ArrayList<ItemInformation> itemPurchaseList = new ArrayList<>();
 
@@ -51,5 +51,12 @@ class SaleTest {
         assertTrue((testSale.itemPurchaseList.size() == 2),"Size of itemPurchaseList is not correct");
         assertTrue((runningTotal == 70),"runningTotal not correct amount");
     }
-
+    @Test
+    void testCalculateTotalVAT() {
+        testSale.updateSale(testItem,testSale);
+        testSale.updateSale(testItem2, testSale);
+        double testTotalVAT = 0.047619047619047686;
+        testSale.calculateTotalVAT(testSale);
+        assertTrue(testTotalVAT == testSale.totalVAT);
+    }
 }
