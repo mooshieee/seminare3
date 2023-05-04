@@ -79,6 +79,7 @@ public class Controller {
     }
     //Ends sale and prints receipt
     public void endSale() {
+        sale.calculateTotalVAT(sale);
         sale.receipt.printReceipt(sale);
     }
 

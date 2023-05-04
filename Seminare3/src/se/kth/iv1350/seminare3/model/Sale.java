@@ -10,6 +10,7 @@ public class Sale {
     public ArrayList<ItemInformation> itemPurchaseList = new ArrayList<ItemInformation>();
     public double runningTotal;
     public double amountPaid;
+    public double totalPriceWithoutVAT;
     public double change;
     public Sale() {
         saleTime = LocalTime.now();
@@ -36,11 +37,15 @@ public class Sale {
         }
 
         for (int i = 0;i < sale.itemPurchaseList.size();i++) {
-            runningTotal = runningTotal + sale.itemPurchaseList.get(i).itemPrice * sale.itemPurchaseList.get(i).quanitity;
+            totalPriceWithoutVAT = runningTotal + sale.itemPurchaseList.get(i).itemPrice * sale.itemPurchaseList.get(i).quanitity;
+            runningTotal = runningTotal + (sale.itemPurchaseList.get(i).itemPrice * (1 + sale.itemPurchaseList.get(i).itemVATRate)) * sale.itemPurchaseList.get(i).quanitity;
 
         }
         sale.runningTotal = runningTotal;
+        sale.totalPriceWithoutVAT = totalPriceWithoutVAT;
         return runningTotal;
     }
-
+    public void calculateTotalVAT(Sale sale) {
+        sale.totalVAT = (sale.runningTotal - sale.totalPriceWithoutVAT) / sale.runningTotal;
+    }
 }

@@ -18,10 +18,11 @@ public class Receipt {
         System.out.println("List of items: ");
         for (int i = 0;i < sale.itemPurchaseList.size();i++) {
             Controller.printInformation(sale.itemPurchaseList.get(i));
+            System.out.println("Quantity:" + sale.itemPurchaseList.get(i).quanitity);
             System.out.println();
         }
         System.out.println("Total Price: " + sale.runningTotal);
-        //System.out.println("Total VAT: " + sale.totalVAT);
+        System.out.println("Total VAT: " + sale.totalVAT);
         System.out.println("Amount Paid: " + sale.amountPaid);
         System.out.println("Change: " + sale.change);
     }
