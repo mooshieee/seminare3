@@ -22,7 +22,7 @@ public class Receipt {
             System.out.println();
         }
         System.out.println("Total Price: " + sale.runningTotal);
-        System.out.println("Total VAT: " + sale.totalVAT);
+        System.out.println("Total VAT rate: " + sale.totalVATRate);
         System.out.println("Amount Paid: " + sale.amountPaid);
         System.out.println("Change: " + sale.change);
     }

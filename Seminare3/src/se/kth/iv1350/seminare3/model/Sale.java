@@ -9,7 +9,7 @@ public class Sale {
     public Receipt receipt;
     public ArrayList<ItemInformation> itemPurchaseList = new ArrayList<ItemInformation>();
     public double runningTotal;
-    public double totalVAT;
+    public double totalVATRate;
     public double amountPaid;
     public double totalPriceWithoutVAT;
     public double change;
@@ -26,6 +26,7 @@ public class Sale {
     public double updateSale(ItemInformation itemInfo, Sale sale) {
 
         runningTotal = 0;
+        totalPriceWithoutVAT = 0;
         //Only add item to itemPurchaseList if it doesn't already exist in list.
         boolean foundItem = false;
         for (int i = 0; i < sale.itemPurchaseList.size();i++) {
@@ -38,7 +39,7 @@ public class Sale {
         }
 
         for (int i = 0;i < sale.itemPurchaseList.size();i++) {
-            totalPriceWithoutVAT = runningTotal + sale.itemPurchaseList.get(i).itemPrice * sale.itemPurchaseList.get(i).quanitity;
+            totalPriceWithoutVAT = totalPriceWithoutVAT + (sale.itemPurchaseList.get(i).itemPrice * sale.itemPurchaseList.get(i).quanitity);
             runningTotal = runningTotal + (sale.itemPurchaseList.get(i).itemPrice * (1 + sale.itemPurchaseList.get(i).itemVATRate)) * sale.itemPurchaseList.get(i).quanitity;
 
         }
@@ -47,6 +48,6 @@ public class Sale {
         return runningTotal;
     }
     public void calculateTotalVAT(Sale sale) {
-        sale.totalVAT = (sale.runningTotal - sale.totalPriceWithoutVAT) / sale.runningTotal;
+        sale.totalVATRate = (sale.runningTotal - sale.totalPriceWithoutVAT) / sale.runningTotal;
     }
 }
