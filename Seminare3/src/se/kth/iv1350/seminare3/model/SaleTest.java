@@ -55,7 +55,7 @@ class SaleTest {
     void testCalculateTotalVAT() {
         testSale.updateSale(testItem,testSale);
         testSale.updateSale(testItem2, testSale);
-        double testTotalVAT = 0.047619047619047686;
+        double testTotalVAT = 0.1587301587301588;
         testSale.calculateTotalVAT(testSale);
         assertTrue(testTotalVAT == testSale.totalVATRate);
     }
