@@ -1,9 +1,12 @@
 package se.kth.iv1350.seminare3.controller;
 
+import se.kth.iv1350.seminare3.Integration.FileLogger;
 import se.kth.iv1350.seminare3.Integration.InventorySystem;
 import se.kth.iv1350.seminare3.model.ItemInformation;
 import se.kth.iv1350.seminare3.model.Receipt;
 import se.kth.iv1350.seminare3.model.Sale;
+import se.kth.iv1350.seminare3.view.DatabaseFailureException;
+import se.kth.iv1350.seminare3.view.ItemIdentifierInvalidException;
 
 import java.util.Scanner;
 
@@ -11,6 +14,11 @@ import java.util.Scanner;
 
 public class Controller {
     private Sale sale;
+    private FileLogger fileLogger;
+
+    public Controller(FileLogger fileLogger){
+        this.fileLogger = fileLogger;
+    }
 
     /*Starts a new sale*/
 
@@ -31,7 +39,8 @@ public class Controller {
     quanitity of that item. If itemIdentifier has not already been used it searches for itemIdentifier in
     InventorySystem using retrieveItemInformation method. Then uses itemInfo to update sale and calculate runningTotal.
      */
-    public void enterItemIdentifier(int itemIdentifier) {
+
+    public void enterItemIdentifier(int itemIdentifier) throws ItemIdentifierInvalidException, DatabaseFailureException {
         ItemInformation itemInfo = null;
         boolean itemAdded = false;
         if (sale.itemPurchaseList.size() > 0) {
@@ -41,7 +50,7 @@ public class Controller {
                     itemInfo = sale.itemPurchaseList.get(i);
                     sale.itemPurchaseList.get(i).quanitity += 1;
                     printInformation(itemInfo);
-                    System.out.println("Running Total: " + sale.updateSale(itemInfo,sale));
+                    System.out.println("Running Total: " + sale.updateSale(itemInfo, sale));
                     itemAdded = true;
                     break;
                 }
@@ -49,10 +58,20 @@ public class Controller {
         }
         if (itemAdded == false) {
             if (itemInfo == null) {
+                if (itemIdentifier == 10) {
+                    String errorMsg = "se.kth.iv1350.seminare3.view.DatabaseFailureException: Inventory Database can not be called" ;
+                    fileLogger.log(errorMsg);
+                    throw new DatabaseFailureException("Inventory Database can not be called");
+                }
                 itemInfo = InventorySystem.retrieveItemInformation(itemIdentifier);
+
             }
+
             if (itemInfo == null) {
-                System.out.println("ItemIdentifier not found");
+                String errorMsg2 = "se.kth.iv1350.seminare3.view.ItemIdentifierInvalidException: ItemIdentifier not found. ";
+                fileLogger.log(errorMsg2 + "ItemIdentifier used: " + itemIdentifier);
+                throw new ItemIdentifierInvalidException("ItemIdentifier not found");
+
             } else {
                 printInformation(itemInfo);
                 System.out.println("Are there multiple of same item? y/n");
@@ -63,10 +82,12 @@ public class Controller {
                     int quantity = scannerObj.nextInt();
                     itemInfo.quanitity = quantity;
                 }
-                System.out.println("Running Total: " + sale.updateSale(itemInfo,sale));
+                System.out.println("Running Total: " + sale.updateSale(itemInfo, sale));
             }
         }
     }
+
+
     /*
     enterAmountPaid calculates change and sets amountPaid and change variables in sale.
      */
