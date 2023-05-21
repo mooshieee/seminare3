@@ -2,6 +2,8 @@ package se.kth.iv1350.seminare3.model;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+
 //the class Sale contains saletime,receipt, itemPurchaseList, runningTotal, amountPaid and change.
 //it also contains the method updateSale
 public class Sale {
@@ -13,6 +15,8 @@ public class Sale {
     public double amountPaid;
     public double totalPriceWithoutVAT;
     public double change;
+    private List<SaleObserver> saleObservers = new ArrayList<>();
+
     public Sale() {
         saleTime = LocalTime.now();
         receipt = new Receipt(saleTime);

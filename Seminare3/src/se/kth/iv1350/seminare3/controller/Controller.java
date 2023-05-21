@@ -103,7 +103,7 @@ public class Controller {
     enterAmountPaid calculates change and sets amountPaid and change variables in sale.
      */
     public double enterAmountPaid(double amountPaid) {
-        double change =  amountPaid-sale.runningTotal;
+        double change =  amountPaid- sale.runningTotal;
         sale.amountPaid = amountPaid;
         sale.change = change;
         return change;
@@ -116,6 +116,9 @@ public class Controller {
         sale.calculateTotalVAT(sale);
         sale.updateObservers(sale);
 
+    }
+    public void addSaleObserver(SaleObserver obs){
+        saleObservers.add(obs);
     }
 
 }

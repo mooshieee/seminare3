@@ -1,0 +1,2 @@
+se.kth.iv1350.seminare3.view.DatabaseFailureException: Inventory Database can not be called
+se.kth.iv1350.seminare3.view.ItemIdentifierInvalidException: ItemIdentifier not found. ItemIdentifier used: 6

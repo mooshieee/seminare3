@@ -4,6 +4,10 @@ import se.kth.iv1350.seminare3.Integration.FileLogger;
 import se.kth.iv1350.seminare3.controller.Controller;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 public class ViewExceptionTest {
     /*Testa att korrekt felmeddelande skrivs ut när exception händer
@@ -20,7 +24,10 @@ public class ViewExceptionTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         try {
-            testContr.enterItemIdentifier(8);
+            boolean exceptionThrown = false;
+            testContr.enterItemIdentifier(7);
+
+            assertTrue(exceptionThrown == true, "exception not thrown using invalid ItemIdentifier");
         } catch (ItemIdentifierInvalidException e) {
             boolean exceptionThrown = true;
             assertTrue(exceptionThrown == true);
