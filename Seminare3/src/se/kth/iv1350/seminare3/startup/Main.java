@@ -11,8 +11,9 @@ import se.kth.iv1350.seminare3.view.View;
 public class Main {
     //Creates controller object contr, view object and runs method runFakeExecution in view.
     public static void main(String[] args) {
-        Controller contr = new Controller(new FileLogger());
-        View view = new View(contr,new FileLogger());
+
+        Controller contr = new Controller(new FileLogger("exceptionLog"));
+        View view = new View(contr,new FileLogger("exceptionLog"));
         view.runFakeExecution();
     }
 

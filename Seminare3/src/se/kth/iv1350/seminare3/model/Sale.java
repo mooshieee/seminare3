@@ -45,9 +45,18 @@ public class Sale {
         }
         sale.runningTotal = runningTotal;
         sale.totalPriceWithoutVAT = totalPriceWithoutVAT;
+
         return runningTotal;
     }
     public void calculateTotalVAT(Sale sale) {
         sale.totalVATRate = (sale.runningTotal - sale.totalPriceWithoutVAT) / sale.runningTotal;
+    }
+    public void updateObservers(Sale sale) {
+        for (SaleObserver obs:saleObservers) {
+            obs.CalculateTotalRevenue(sale);
+        }
+    }
+    public void addSaleObserver(SaleObserver obs){
+        saleObservers.add(obs);
     }
 }

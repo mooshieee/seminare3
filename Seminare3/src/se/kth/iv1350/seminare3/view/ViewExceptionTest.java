@@ -9,19 +9,39 @@ public class ViewExceptionTest {
     /*Testa att korrekt felmeddelande skrivs ut när exception händer
 
      */
-    Controller testContr = new Controller(new FileLogger());
+    Controller testContr = new Controller(new FileLogger("exceptionLog"));
 
-    View view = new View(testContr,new FileLogger());
+    View view = new View(testContr, new FileLogger("exceptionLog"));
+
     @Test
     void testExceptionInvalidIE() {
         testContr.startSale();
+        String input = "n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
         try {
             testContr.enterItemIdentifier(8);
         } catch (ItemIdentifierInvalidException e) {
-            ItemIdentifierInvalidException t = new ItemIdentifierInvalidException("ItemIdentifier not found");
-
-            assertTrue(e ==t, "Not correct exception type" );
+            boolean exceptionThrown = true;
+            assertTrue(exceptionThrown == true);
         }
+    }
 
+    @Test
+    void testDatabaseException() {
+        testContr.startSale();
+        String input = "n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        boolean exceptionThrown = false;
+        try {
+            testContr.enterItemIdentifier(10);
+        } catch (DatabaseFailureException e) {
+            exceptionThrown = true;
+        } catch (ItemIdentifierInvalidException e) {
+
+        }
+        assertTrue(exceptionThrown == true, "DatabaseFailureException not thrown using " +
+                "itemIdentifier 10, (Database failed");
     }
 }

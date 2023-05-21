@@ -10,9 +10,9 @@ public class FileLogger {
     /**
      * Creates a new instance and also creates a new log file. An existing log file will be deleted.
      */
-    public FileLogger() {
+    public FileLogger(String fileName) {
         try {
-            logStream = new PrintWriter(new FileWriter("log.txt"), true);
+            logStream = new PrintWriter(new FileWriter(fileName), true);
         } catch (IOException ioe) {
             System.out.println("CAN NOT LOG.");
             ioe.printStackTrace();

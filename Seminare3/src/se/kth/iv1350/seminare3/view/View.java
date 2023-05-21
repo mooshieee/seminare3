@@ -1,6 +1,8 @@
 package se.kth.iv1350.seminare3.view;
 
 
+import se.kth.iv1350.seminare3.Integration.FileLogger;
+import se.kth.iv1350.seminare3.Integration.TotalRevenueFileOutput;
 import se.kth.iv1350.seminare3.controller.Controller;
 
 import java.io.StringWriter;
@@ -9,9 +11,19 @@ import java.util.Scanner;
 
 public class View {
     private Controller contr;
+    private FileLogger filelogger;
+    public TotalRevenueView totalRevenueView = new TotalRevenueView();
 
-    public View(Controller contr) {
+
+
+    public View(Controller contr, FileLogger filelogger) {
         this.contr = contr;
+        this.filelogger = filelogger;
+        TotalRevenueView totalRevenueView = new TotalRevenueView();
+        TotalRevenueFileOutput totalRevenueFileOutput = new TotalRevenueFileOutput();
+        contr.addSaleObserver(totalRevenueFileOutput);
+        contr.addSaleObserver(totalRevenueView);
+
     }
     /*
     Simulates a sale. Lets user enter itemIdentifiers to add items to sale.
@@ -24,17 +36,14 @@ public class View {
         while (scanning) {
             System.out.println("Enter item identifier. Enter 0 to end scanning");
             try {
-            int itemIdentifier = scannerObj.nextInt();
+                int itemIdentifier = scannerObj.nextInt();
 
-            if (itemIdentifier != 0) {
+                if (itemIdentifier != 0) {
 
                     contr.enterItemIdentifier(itemIdentifier);
 
-                }
-
-
-            else
-                scanning = false;
+                } else
+                    scanning = false;
             } catch (ItemIdentifierInvalidException msg) {
                 System.out.println(msg);
                 //StringWriter sw = new StringWriter();
@@ -43,8 +52,7 @@ public class View {
                 //msg.printStackTrace();
                 //fileLogger.log(msg.printStackTrace());
                 //throw ItemIdentifierInvalidException(msg);
-            }
-            catch (DatabaseFailureException msg) {
+            } catch (DatabaseFailureException msg) {
                 System.out.println(msg);
                 //msg.printStackTrace();
 
@@ -56,6 +64,14 @@ public class View {
         double change = contr.enterAmountPaid(amountPaid);
         System.out.println("Your change is: " + change);
         contr.endSale();
-    }
+        System.out.println("Do you want to start a new sale? y/n");
+        Scanner scannerObj2 = new Scanner(System.in);
+        String answer = scannerObj2.nextLine();
+        if (answer.equals("y")) {
+            runFakeExecution();
+        }
+        else {
 
+        }
+    }
 }

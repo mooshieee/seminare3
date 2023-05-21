@@ -5,16 +5,23 @@ import se.kth.iv1350.seminare3.Integration.InventorySystem;
 import se.kth.iv1350.seminare3.model.ItemInformation;
 import se.kth.iv1350.seminare3.model.Receipt;
 import se.kth.iv1350.seminare3.model.Sale;
+import se.kth.iv1350.seminare3.model.SaleObserver;
 import se.kth.iv1350.seminare3.view.DatabaseFailureException;
 import se.kth.iv1350.seminare3.view.ItemIdentifierInvalidException;
+import se.kth.iv1350.seminare3.view.TotalRevenueView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*This is the applications only controller. All calls to the model pass through this class*/
 
 public class Controller {
+
     private Sale sale;
     private FileLogger fileLogger;
+
+    private List<SaleObserver> saleObservers = new ArrayList<>();
 
     public Controller(FileLogger fileLogger){
         this.fileLogger = fileLogger;
@@ -24,6 +31,10 @@ public class Controller {
 
     public void startSale() {
         sale = new Sale();
+        for (SaleObserver obs: saleObservers) {
+            sale.addSaleObserver(obs);
+        }
+
     }
     /*
     Prints information about a ItemInformation object.
@@ -100,8 +111,11 @@ public class Controller {
     }
     //Ends sale and prints receipt
     public void endSale() {
-        sale.calculateTotalVAT(sale);
+
         sale.receipt.printReceipt(sale);
+        sale.calculateTotalVAT(sale);
+        sale.updateObservers(sale);
+
     }
 
 }
